@@ -81,6 +81,55 @@ public class EchoServer {
 } // end EchoServer
 ```
 
+Diagram explaining connection build-up:
+```goat
+initial state
+
+-----------. 80 -> *                               .---------
+listening   |                                     |  client
+server      |                                     |  socket
+socket      |                                     |
+-----------'                                       '---------
+                                                 <-55123
+
+
+-------------------------------------------------------------
+
+
+
+connecting, 'during' accept()
+
+-----------. 80 -> *                               .---------
+listening   |                                     |  client
+server      +-------------------------------------+  socket
+socket      |                                     |
+-----------'                                       '---------
+                                               80<-55123
+
+
+
+-------------------------------------------------------------
+
+
+
+established connection
+
+-----------. 80 -> *
+listening   |   
+server      |   
+socket      |
+-----------'
+
+-----------.                                       .---------
+servers     |                                     |  client
+'client'    +-------------------------------------+  socket
+socket      |                                     |
+-----------'                                       '---------
+            80->55123                            80<-55123
+```
+
+
+
 ## Starting the program
 
 ```bash
